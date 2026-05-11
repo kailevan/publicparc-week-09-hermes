@@ -17,7 +17,7 @@ if (btn) {
   const PROXIMITY_DRAG   = 130;   // px — drag this close = also leap
   const BASE_DISTANCE    = 110;   // starting leap distance
   const ESCALATION       = 45;    // px added per attempt
-  const PADDING          = 24;    // px from viewport edges
+  const PADDING          = 16;    // px from viewport edges
   const SNAP_BACK_DELAY  = 1500;  // ms idle before button slides home
   const LEAP_THROTTLE    = 250;   // ms minimum between leaps
   const YIELD_AFTER      = 4;     // leaps before the button accepts the tap
@@ -30,9 +30,27 @@ if (btn) {
   let snapBackTimer = null;
   let lastLeapAt = 0;
 
-  function currentCenter() {
+  // Cached natural geometry — measured once at load, refreshed on resize.
+  // Using a cached value (rather than reading getBoundingClientRect every
+  // frame) avoids relying on transform-interpolated rects mid-transition,
+  // which is what was making the clamp math drift and lose the button.
+  let natural = { left: 0, top: 0, width: 0, height: 0 };
+
+  function captureNatural() {
     const r = btn.getBoundingClientRect();
-    return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    natural = {
+      left: r.left - offsetX,
+      top:  r.top  - offsetY,
+      width: r.width,
+      height: r.height,
+    };
+  }
+
+  function currentCenter() {
+    return {
+      x: natural.left + offsetX + natural.width / 2,
+      y: natural.top  + offsetY + natural.height / 2,
+    };
   }
 
   function distance(x1, y1, x2, y2) {
@@ -40,17 +58,22 @@ if (btn) {
   }
 
   function clampToViewport() {
-    const r = btn.getBoundingClientRect();
-    const naturalLeft = r.left - offsetX;
-    const naturalTop  = r.top  - offsetY;
+    // Standard padded bounds based on viewport
+    const minOX_raw = PADDING - natural.left;
+    const maxOX_raw = window.innerWidth  - natural.width  - PADDING - natural.left;
+    const minOY_raw = PADDING - natural.top;
+    const maxOY_raw = window.innerHeight - natural.height - PADDING - natural.top;
 
-    const minOffsetX = PADDING - naturalLeft;
-    const maxOffsetX = window.innerWidth  - r.width  - PADDING - naturalLeft;
-    const minOffsetY = PADDING - naturalTop;
-    const maxOffsetY = window.innerHeight - r.height - PADDING - naturalTop;
+    // The natural position (offset 0,0) must always be allowed, even if the
+    // natural position is already past the padding line (which happens when
+    // the sticky bar sits flush against the bottom edge of the viewport).
+    const minOX = Math.min(0, minOX_raw);
+    const maxOX = Math.max(0, maxOX_raw);
+    const minOY = Math.min(0, minOY_raw);
+    const maxOY = Math.max(0, maxOY_raw);
 
-    offsetX = Math.max(minOffsetX, Math.min(maxOffsetX, offsetX));
-    offsetY = Math.max(minOffsetY, Math.min(maxOffsetY, offsetY));
+    offsetX = Math.max(minOX, Math.min(maxOX, offsetX));
+    offsetY = Math.max(minOY, Math.min(maxOY, offsetY));
   }
 
   function leap(fromX, fromY) {
@@ -146,7 +169,7 @@ if (btn) {
 
   document.addEventListener('mousemove', (e) => {
     if (yielded) return;
-    if (e.buttons === 0) return; // only chase while button is pressed
+    if (e.buttons === 0) return;
     const c = currentCenter();
     if (distance(e.clientX, e.clientY, c.x, c.y) < PROXIMITY_DRAG) {
       leap(e.clientX, e.clientY);
@@ -178,4 +201,36 @@ if (btn) {
   if (dialogClose) {
     dialogClose.addEventListener('click', hideYieldDialog);
   }
+
+  // —————— INIT + RESIZE ——————
+  // Cache natural position once the layout settles, then again on resize /
+  // orientation change so the clamp keeps the button inside the viewport
+  // even when the address bar shows/hides or the user rotates the phone.
+  window.addEventListener('load', captureNatural);
+  if (document.readyState === 'complete') captureNatural();
+
+  let resizeTimer;
+  function handleResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      // Temporarily clear transform so getBoundingClientRect reads the
+      // natural position cleanly, then restore the offset and re-clamp.
+      const savedOX = offsetX, savedOY = offsetY;
+      btn.style.transition = 'none';
+      btn.style.transform = 'translate(0, 0)';
+      requestAnimationFrame(() => {
+        captureNatural();
+        offsetX = savedOX;
+        offsetY = savedOY;
+        clampToViewport();
+        btn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        requestAnimationFrame(() => {
+          btn.style.transition = '';
+        });
+      });
+    }, 100);
+  }
+
+  window.addEventListener('resize', handleResize);
+  window.addEventListener('orientationchange', handleResize);
 }
