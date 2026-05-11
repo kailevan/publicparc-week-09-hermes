@@ -825,10 +825,24 @@ ul {
   border-bottom: 1px solid rgba(0, 0, 0, 0);
   border-right: 1px solid rgba(0, 0, 0, 0);
   border-radius: 0 2px 2px 0;
-  /* The transition is critical to the gag — slow, premium, never jittery. */
-  transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  /* Slow ease-out keeps the leaps elegant; background fade handles the
+     greyed-out "processing" state on the final click. */
+  transition:
+    transform 800ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 400ms ease-out;
   will-change: transform;
   position: relative;
+}
+
+.add-to-cart-btn.processing {
+  background: #b8b8b8;
+  pointer-events: none;
+}
+
+.add-to-cart-btn.processing .cart-icon,
+.add-to-cart-btn.processing .cart-label {
+  opacity: 0.7;
+  transition: opacity 400ms ease-out;
 }
 
 .cart-icon {

@@ -90,9 +90,10 @@ if (btn) {
       offsetX = 0;
       offsetY = -ABOVE_OFFSET;
     } else if (attempts === 2) {
-      // Tap 3 — back to the original position
+      // Tap 3 — back to the original position; Apple Pay slides back in too
       offsetX = 0;
       offsetY = 0;
+      if (applePay) applePay.classList.remove('hidden');
     }
 
     clampToViewport();
@@ -143,13 +144,16 @@ if (btn) {
     }
   });
 
-  // —————— CLICK (yield = dialog) ——————
+  // —————— CLICK (yield = grey-out → dialog) ——————
   btn.addEventListener('click', (e) => {
     if (!yielded) {
       e.preventDefault();
       return;
     }
-    showYieldDialog();
+    // The tap finally registers — button greys out for a beat ("processing")
+    // before the brand's actual answer arrives.
+    btn.classList.add('processing');
+    setTimeout(showYieldDialog, 1500);
   });
 
   // —————— DIALOG ——————
