@@ -1,33 +1,25 @@
 // Hermès Birkin — Add to Cart Evade (mobile-first, touch-driven)
 //
 // Choreographed mechanic:
-//   Tap 1 → button slides left, stays at the sticky bar (subtle refusal)
-//   Tap 2 → button jumps up-right into the product details
-//   Tap 3 → button jumps to the upper-left, onto the hero bag image
-//   Tap 4 → button jumps to the top-right, next to the cart icon
-//   Tap 5 → button yields, accepts the tap, Hermès dialog fades in
-//   1.5s idle → button slides home, ready to refuse again
+//   Tap 1 → button slides left to cover the Apple Pay slot;
+//           Apple Pay fades away at the same time and never returns.
+//   Tap 2 → button rises just above its original position.
+//   Tap 3 → button returns to its original position (looks like it gave up).
+//   Tap 4 → the tap finally registers and the Hermès dialog fades in.
+//   1.5s idle with no tap → button slides home, Apple Pay returns, sequence resets.
 
 const btn = document.getElementById('add-to-cart');
+const applePay = document.querySelector('.apple-pay-btn');
 const dialog = document.getElementById('yield-dialog');
 const dialogClose = document.querySelector('.dialog-close');
 
 if (btn) {
-  // Predestined leap targets — each value is the desired button CENTER
-  // position as a fraction of the viewport (xRatio across the width,
-  // yRatio down the height). The clamp at the end keeps the button on
-  // screen if a target lands too close to an edge on a narrow viewport.
-  const LEAP_POSITIONS = [
-    { xRatio: 0.20, yRatio: 0.94 },  // 1: bottom-left, still at the bar
-    { xRatio: 0.70, yRatio: 0.55 },  // 2: right side, mid-page
-    { xRatio: 0.25, yRatio: 0.28 },  // 3: upper-left, onto the bag image
-    { xRatio: 0.75, yRatio: 0.08 },  // 4: top-right, next to the cart icon
-  ];
-
-  const PROXIMITY_TAP   = 90;    // px — touch this close = trigger a leap
-  const PADDING         = 16;    // px — keep button this far from viewport edges
-  const SNAP_BACK_DELAY = 1500;  // ms — idle time before button slides home
-  const LEAP_THROTTLE   = 250;   // ms — minimum time between leaps
+  const PROXIMITY_TAP    = 90;    // px — touch this close = trigger a leap
+  const ABOVE_OFFSET     = 80;    // px — how far above natural for tap 2
+  const PADDING          = 16;    // px — keep button this far from viewport edges
+  const SNAP_BACK_DELAY  = 1500;  // ms — idle time before button slides home
+  const LEAP_THROTTLE    = 250;   // ms — minimum time between leaps
+  const TOTAL_LEAPS      = 3;     // tap 4 is the yield
 
   let offsetX = 0;
   let offsetY = 0;
@@ -36,7 +28,6 @@ if (btn) {
   let snapBackTimer = null;
   let lastLeapAt = 0;
 
-  // Cached natural geometry — captured at load + on resize.
   let natural = { left: 0, top: 0, width: 0, height: 0 };
 
   function captureNatural() {
@@ -66,8 +57,7 @@ if (btn) {
     const minOY_raw = PADDING - natural.top;
     const maxOY_raw = window.innerHeight - natural.height - PADDING - natural.top;
 
-    // Natural position (offset 0,0) must always be a valid resting state,
-    // even if the sticky bar already sits flush against the bottom edge.
+    // Natural position (offset 0,0) must always be a valid resting state.
     const minOX = Math.min(0, minOX_raw);
     const maxOX = Math.max(0, maxOX_raw);
     const minOY = Math.min(0, minOY_raw);
@@ -84,25 +74,34 @@ if (btn) {
     if (now - lastLeapAt < LEAP_THROTTLE) return;
     lastLeapAt = now;
 
-    if (attempts >= LEAP_POSITIONS.length) return; // safety guard
+    if (attempts >= TOTAL_LEAPS) return;
 
-    const pos = LEAP_POSITIONS[attempts];
-    const targetCenterX = pos.xRatio * window.innerWidth;
-    const targetCenterY = pos.yRatio * window.innerHeight;
-    const naturalCenterX = natural.left + natural.width / 2;
-    const naturalCenterY = natural.top  + natural.height / 2;
-
-    offsetX = targetCenterX - naturalCenterX;
-    offsetY = targetCenterY - naturalCenterY;
+    if (attempts === 0) {
+      // Tap 1 — slide left so the button's left edge aligns with Apple Pay's
+      // left edge. Apple Pay fades out at the same time.
+      if (applePay) {
+        const appleRect = applePay.getBoundingClientRect();
+        offsetX = appleRect.left - natural.left;
+        offsetY = 0;
+        applePay.classList.add('hidden');
+      }
+    } else if (attempts === 1) {
+      // Tap 2 — just above the original position
+      offsetX = 0;
+      offsetY = -ABOVE_OFFSET;
+    } else if (attempts === 2) {
+      // Tap 3 — back to the original position
+      offsetX = 0;
+      offsetY = 0;
+    }
 
     clampToViewport();
-
     btn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
 
     attempts++;
     armSnapBack();
 
-    if (attempts >= LEAP_POSITIONS.length) {
+    if (attempts >= TOTAL_LEAPS) {
       yielded = true;
       btn.classList.add('yielded');
     }
@@ -117,7 +116,9 @@ if (btn) {
     if (yielded) return;
     offsetX = 0;
     offsetY = 0;
+    attempts = 0;
     btn.style.transform = 'translate(0, 0)';
+    if (applePay) applePay.classList.remove('hidden');
   }
 
   // —————— TOUCH (primary, mobile) ——————
