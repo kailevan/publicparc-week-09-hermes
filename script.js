@@ -2,11 +2,13 @@
 //
 // Choreographed mechanic:
 //   Tap 1 → button slides left to cover the Apple Pay slot;
-//           Apple Pay fades away at the same time and never returns.
-//   Tap 2 → button rises just above its original position.
-//   Tap 3 → button returns to its original position (looks like it gave up).
-//   Tap 4 → the tap finally registers and the Hermès dialog fades in.
-//   1.5s idle with no tap → button slides home, Apple Pay returns, sequence resets.
+//           Apple Pay fades away at the same time.
+//   Tap 2 → button flies up to the top of the viewport (near the cart icon).
+//   Tap 3 → button swings to the middle-left, over the bag image.
+//   Tap 4 → button returns to its original position; Apple Pay slides back in
+//           too — looks like it gave up.
+//   Tap 5 → tap registers, button greys out briefly, dialog fades in.
+//   2s idle with no tap → button slides home, Apple Pay returns, sequence resets.
 
 const btn = document.getElementById('add-to-cart');
 const applePay = document.querySelector('.apple-pay-btn');
@@ -19,7 +21,7 @@ if (btn) {
   const PADDING          = 16;    // px — keep button this far from viewport edges
   const SNAP_BACK_DELAY  = 2000;  // ms — idle time before button slides home
   const LEAP_THROTTLE    = 250;   // ms — minimum time between leaps
-  const TOTAL_LEAPS      = 3;     // tap 4 is the yield
+  const TOTAL_LEAPS      = 4;     // tap 5 is the yield
 
   let offsetX = 0;
   let offsetY = 0;
@@ -86,11 +88,19 @@ if (btn) {
         applePay.classList.add('hidden');
       }
     } else if (attempts === 1) {
-      // Tap 2 — just above the original position
-      offsetX = 0;
-      offsetY = -ABOVE_OFFSET;
+      // Tap 2 — flies up to the top of the viewport, near the cart icon
+      const targetCenterX = window.innerWidth * 0.55;
+      const targetCenterY = window.innerHeight * 0.08;
+      offsetX = targetCenterX - (natural.left + natural.width / 2);
+      offsetY = targetCenterY - (natural.top  + natural.height / 2);
     } else if (attempts === 2) {
-      // Tap 3 — back to the original position; Apple Pay slides back in too
+      // Tap 3 — swings across to the middle-left, over the bag image
+      const targetCenterX = window.innerWidth * 0.22;
+      const targetCenterY = window.innerHeight * 0.45;
+      offsetX = targetCenterX - (natural.left + natural.width / 2);
+      offsetY = targetCenterY - (natural.top  + natural.height / 2);
+    } else if (attempts === 3) {
+      // Tap 4 — back to the original position; Apple Pay slides back in too
       offsetX = 0;
       offsetY = 0;
       if (applePay) applePay.classList.remove('hidden');
@@ -157,7 +167,7 @@ if (btn) {
     // boutique-toned waiting state for a beat before the answer arrives.
     btn.classList.add('processing');
     if (cartLabel) cartLabel.textContent = PROCESSING_LABEL;
-    setTimeout(showYieldDialog, 1000);
+    setTimeout(showYieldDialog, 500);
   });
 
   // —————— DIALOG ——————
