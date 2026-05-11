@@ -1,0 +1,836 @@
+/* Hermès Sac 24/24 - 29 — 1:1 from Figma (390px mobile) */
+
+:root {
+  --bg-page: #fcf7f1;
+  --bg-card: #fffcf7;
+  --bg-selector: rgba(255, 252, 247, 0.93);
+  --ink: #000000;
+  --muted: #696969;
+  --separator: rgba(246, 241, 235, 0.6);
+  --separator-solid: #f6f1eb;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: #ddd;
+  font-family: 'Manrope', sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* The phone-size device frame */
+.device {
+  width: 390px;
+  margin: 0 auto;
+  background: var(--bg-page);
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 80px; /* room for sticky bar */
+}
+
+/* ---------- HEADER ---------- */
+.header {
+  position: relative;
+  width: 390px;
+  height: 50px;
+  background: var(--bg-page);
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+}
+
+.header-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-icon img {
+  width: 20px;
+  height: 20px;
+}
+
+.header-menu {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.header-search {
+  position: absolute;
+  left: 56px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.header-logo {
+  position: absolute;
+  left: 168.6px;
+  top: 4px;
+  width: 60px;
+  height: 36px;
+}
+
+.header-logo img {
+  width: 60px;
+  height: 36px;
+}
+
+.header-account {
+  position: absolute;
+  right: 51px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.header-bag {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  position: relative;
+  width: 390px;
+}
+
+.hero-image {
+  width: 390px;
+  height: 390px;
+  overflow: hidden;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  width: 65px;
+  height: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.hero-dots .dot {
+  display: block;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.hero-dots .dot-active {
+  width: 7.5px;
+  height: 7.5px;
+  background: #000;
+  border: 1px solid #fff;
+}
+
+.hero-dots .dot-med {
+  width: 4px;
+  height: 4px;
+}
+
+.hero-dots .dot-small {
+  width: 3px;
+  height: 3px;
+}
+
+/* ---------- SELECTOR (over hero overlap area) ---------- */
+.selector {
+  background: var(--bg-selector);
+  padding: 24px 15px;
+  width: 390px;
+}
+
+.product-title {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--ink);
+  margin: 0;
+}
+
+.product-price {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--ink);
+  padding-top: 8px;
+  padding-bottom: 16px;
+}
+
+.variant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 14px;
+  line-height: 22px;
+  padding-bottom: 8px;
+}
+
+.variant-label {
+  color: var(--muted);
+}
+
+.variant-value {
+  color: var(--ink);
+  text-transform: capitalize;
+}
+
+.variant-swatches {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  padding-bottom: 8px;
+}
+
+.swatch {
+  background: var(--bg-card);
+  aspect-ratio: 1 / 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.swatch img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swatch-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0.01px;
+  bottom: -2.99px;
+  border-bottom: 1px solid #000;
+  height: 0;
+}
+
+/* ---------- DETAILS ---------- */
+.details {
+  background: var(--bg-card);
+  padding: 16px 15px;
+  width: 390px;
+}
+
+.details-description p {
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--ink);
+}
+
+.details-description p + p {
+  margin-top: 20px;
+}
+
+.details-line {
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--ink);
+  margin-top: 20px;
+}
+
+.details-footer {
+  margin-top: 24px;
+}
+
+.details-footer .ref,
+.details-footer .env,
+.details-footer .contact {
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--muted);
+}
+
+.details-footer .env {
+  margin-top: 0;
+}
+
+.details-footer .contact {
+  margin-top: 0;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.details-footer a {
+  text-decoration: underline;
+  color: var(--muted);
+}
+
+.details-footer .env a {
+  color: var(--muted);
+}
+
+/* ---------- EXPANSION PANELS ---------- */
+.panels {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  position: relative;
+}
+
+.panel::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  border-top: 1px solid var(--separator);
+}
+
+.panel-label {
+  font-family: 'Overpass Mono', monospace;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+
+.panel-icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* ---------- STORY ---------- */
+.story {
+  padding: 32px 15px 24px;
+  background: var(--bg-page);
+  width: 390px;
+}
+
+.story-title {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--ink);
+  text-align: center;
+  padding-bottom: 13.8px;
+}
+
+.story-body {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  color: var(--ink);
+  text-align: center;
+  padding-top: 6.2px;
+}
+
+.story-link {
+  display: block;
+  margin: 6px auto 0;
+  width: fit-content;
+  font-family: 'Overpass Mono', monospace;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 1px;
+  background: rgba(105, 105, 105, 0.8);
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.story-video {
+  margin-top: 16px;
+  width: 360px;
+  position: relative;
+  background: var(--bg-card);
+}
+
+.video-thumb {
+  width: 360px;
+  height: 202.5px;
+  object-fit: cover;
+  display: block;
+}
+
+.video-controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.video-btn {
+  width: 40px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-btn img {
+  width: 40px;
+  height: 30px;
+}
+
+.video-progress {
+  flex: 1;
+  height: 3px;
+  background: var(--muted);
+  margin: 0 10px;
+  position: relative;
+}
+
+.video-progress-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 27%;
+  background: #000;
+}
+
+.video-time {
+  font-family: 'Arial', sans-serif;
+  font-size: 10px;
+  line-height: 30px;
+  color: var(--ink);
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+/* ---------- CROSS-SELL ---------- */
+.cross-sell {
+  padding: 24px 15px 72px;
+  background: var(--bg-page);
+  width: 390px;
+}
+
+.cross-sell-title {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 15px;
+}
+
+.cross-sell-item {
+  display: block;
+  width: 177px;
+}
+
+.cross-sell-image {
+  background: var(--bg-card);
+  width: 177px;
+  height: 177px;
+  overflow: hidden;
+}
+
+.cross-sell-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cross-sell-name {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--ink);
+  padding-top: 8px;
+}
+
+.cross-sell-price {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--muted);
+}
+
+/* ---------- BREADCRUMB ---------- */
+.breadcrumb {
+  width: 360px;
+  margin: 0 auto;
+  padding-top: 1.5px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Overpass Mono', monospace;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 14px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 24px;
+}
+
+.crumb-link {
+  text-decoration: underline;
+}
+
+.crumb-sep {
+  color: var(--muted);
+}
+
+/* ---------- FOOTER ---------- */
+.footer {
+  background: var(--bg-card);
+  width: 390px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-section {
+  width: 390px;
+  padding: 0 15px;
+}
+
+.footer-service {
+  border-bottom: 1px solid var(--separator-solid);
+  padding: 30px 15px 16px;
+  background: #fff;
+}
+
+.footer-heading {
+  font-family: 'Overpass Mono', monospace;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 22px;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.footer-heading-center {
+  text-align: center;
+}
+
+.footer-service .footer-heading {
+  margin-bottom: 0.25px;
+}
+
+.footer-text {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--muted);
+  margin-top: 16px;
+}
+
+.footer-service .footer-text:first-of-type {
+  margin-top: 0;
+}
+
+.footer-text.muted,
+.footer-text .muted {
+  color: var(--muted);
+}
+
+.footer-link {
+  display: block;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--ink);
+  text-decoration: underline;
+  margin-top: 4px;
+}
+
+.footer-service a {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.footer-email {
+  margin-top: 16px;
+}
+
+.footer-collapse {
+  border-bottom: 1px solid var(--separator-solid);
+  padding: 32px 15px;
+  background: #fff;
+}
+
+.footer-group-head {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-family: 'Overpass Mono', monospace;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 22px;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 0;
+  height: 24.25px;
+}
+
+.footer-group-head img {
+  width: 12px;
+  height: 12px;
+  margin-top: 3px;
+}
+
+.footer-list {
+  padding-top: 15px;
+}
+
+.footer-list li {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--muted);
+  padding: 10px 1px;
+}
+
+.footer-list li:first-child {
+  padding-top: 0;
+}
+
+.footer-list li:last-child {
+  padding-bottom: 0;
+}
+
+.footer-social {
+  border-bottom: 1px solid var(--separator-solid);
+  padding: 30px 15px 31px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.footer-social-icons {
+  display: flex;
+  gap: 51.333px;
+}
+
+.footer-social-icons img {
+  width: 24px;
+  height: 24px;
+}
+
+.footer-newsletter {
+  border-bottom: 1px solid var(--separator-solid);
+  padding: 20px 15px 21px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-newsletter .footer-heading {
+  padding-top: 0;
+}
+
+.footer-text-center {
+  text-align: center;
+  margin-top: 4px;
+}
+
+.footer-newsletter-btn {
+  width: 200px;
+  max-width: 240px;
+  min-height: 40px;
+  padding: 12px 17px;
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  font-family: 'Overpass Mono', monospace;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+}
+
+.footer-country {
+  border-bottom: 1px solid var(--separator-solid);
+  padding: 20px 15px 21px;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-country-btn {
+  position: relative;
+  width: 246.23px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Overpass Mono', monospace;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 22px;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.footer-country-btn img {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 10px;
+}
+
+.footer-rider {
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+.footer-rider img {
+  width: 90px;
+  height: 51.5px;
+}
+
+.footer-copyright {
+  width: 340px;
+  margin: 21.5px auto 0;
+  text-align: center;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--ink);
+}
+
+/* ---------- STICKY BAR ---------- */
+.sticky-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 390px;
+  background: var(--bg-card);
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  z-index: 100;
+}
+
+.apple-pay-btn {
+  width: 119.34px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 39.18px 9px 36.16px;
+  background: var(--bg-card);
+  border-top: 1px solid #000;
+  border-left: 1px solid #000;
+  border-bottom: 1px solid #000;
+  border-right: none;
+  border-radius: 2px 0 0 2px;
+}
+
+.apple-pay-btn img {
+  width: 44px;
+  height: 20px;
+}
+
+.add-to-cart-btn {
+  width: 238.66px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 9px 43px 9px 42px;
+  background: #000;
+  border-top: 1px solid rgba(0, 0, 0, 0);
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+  border-right: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 0 2px 2px 0;
+  /* The transition is critical to the gag — slow, premium, never jittery. */
+  transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+  position: relative;
+}
+
+.cart-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.cart-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 16px;
+  font-family: 'Overpass Mono', monospace;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+}
