@@ -146,7 +146,7 @@ if (btn) {
 
   // —————— CLICK (yield = grey-out → dialog) ——————
   const cartLabel = btn.querySelector('.cart-label');
-  const PROCESSING_LABEL = 'ENQUIRING…';
+  const PROCESSING_LABEL = 'ALLOCATION CHECK';
 
   btn.addEventListener('click', (e) => {
     if (!yielded) {
