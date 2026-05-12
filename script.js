@@ -1,29 +1,37 @@
-// Diesel D-DENVER-CL — Add to Cart Evade (desktop, click-driven)
+// Hermès Birkin — Add to Cart Evade (mobile-first, touch-driven)
 //
-// Choreographed mechanic (same as the Hermès desktop reference):
-//   Click 1–3 → button leaps to a random crazy position in the viewport.
-//               Each leap is at least 25% of viewport height away from
-//               the previous spot so consecutive jumps never feel timid.
-//   Click 4   → button returns to its original position (the trap).
-//   Click 5   → the click finally registers; button greys out briefly
-//               with a Diesel-voiced label swap, then the dialog fades in.
-//   2s idle   → button slides home, sequence resets.
+// Choreographed mechanic:
+//   Tap 1–3 → button leaps to a random "crazy" position in the upper half
+//             of the viewport. Each new leap is chosen to be far from the
+//             previous one (avoids tiny boring jumps).
+//   Tap 4   → button returns to its original position — the trap.
+//   Tap 5   → tap finally registers, button greys out briefly with
+//             "AWAITING ADVISOR", then the Hermès dialog fades in.
+//   2s idle with no tap → button slides home, sequence resets.
+//
+// Apple Pay stays put for the whole interaction. The outlined "cart-slot"
+// behind the button is always visible — when the button leaps away, the
+// pill silhouette stays complete with one empty half.
 
-const btn = document.getElementById('add-to-cart-d');
-const dialog = document.getElementById('yield-dialog-d');
-const dialogClose = document.querySelector('.dialog-close-d');
+const btn = document.getElementById('add-to-cart');
+const dialog = document.getElementById('yield-dialog');
+const dialogClose = document.querySelector('.dialog-close');
 
 if (btn) {
-  const PROXIMITY_TAP        = 110;
-  const PADDING              = 24;
-  const SNAP_BACK_DELAY      = 2000;
-  const LEAP_THROTTLE        = 250;
-  const TOTAL_LEAPS          = 4;
-  const MIN_LEAP_DIST_RATIO  = 0.25;
-  const REROLL_TRIES         = 6;
+  const PROXIMITY_TAP        = 90;    // px — touch this close = trigger a leap
+  const PADDING              = 16;    // px — keep button this far from viewport edges
+  const SNAP_BACK_DELAY      = 2000;  // ms — idle time before button slides home
+  const LEAP_THROTTLE        = 250;   // ms — minimum time between leaps
+  const TOTAL_LEAPS          = 4;     // tap 5 is the yield
+  const MIN_LEAP_DIST_RATIO  = 0.25;  // each random leap must travel at least
+                                      // this fraction of the viewport height
+  const REROLL_TRIES         = 6;     // attempts to find a "far enough" target
 
-  const X_MIN = 0.08, X_MAX = 0.85;
-  const Y_MIN = 0.10, Y_MAX = 0.65;
+  // Random leap target zone — fractions of the viewport.
+  // X is full-width-ish; Y stays in the upper portion so the button is
+  // clearly LEAPED, not just sliding within the sticky bar area.
+  const X_MIN = 0.10, X_MAX = 0.90;
+  const Y_MIN = 0.05, Y_MAX = 0.55;
 
   let offsetX = 0;
   let offsetY = 0;
@@ -51,7 +59,9 @@ if (btn) {
     };
   }
 
-  function distance(x1, y1, x2, y2) { return Math.hypot(x1 - x2, y1 - y2); }
+  function distance(x1, y1, x2, y2) {
+    return Math.hypot(x1 - x2, y1 - y2);
+  }
 
   function clampToViewport() {
     const minOX_raw = PADDING - natural.left;
@@ -59,6 +69,7 @@ if (btn) {
     const minOY_raw = PADDING - natural.top;
     const maxOY_raw = window.innerHeight - natural.height - PADDING - natural.top;
 
+    // Natural position (offset 0,0) must always be a valid resting state.
     const minOX = Math.min(0, minOX_raw);
     const maxOX = Math.max(0, maxOX_raw);
     const minOY = Math.min(0, minOY_raw);
@@ -71,10 +82,16 @@ if (btn) {
   function randomTarget() {
     const xRatio = X_MIN + Math.random() * (X_MAX - X_MIN);
     const yRatio = Y_MIN + Math.random() * (Y_MAX - Y_MIN);
-    return { x: xRatio * window.innerWidth, y: yRatio * window.innerHeight };
+    return {
+      x: xRatio * window.innerWidth,
+      y: yRatio * window.innerHeight,
+    };
   }
 
   function pickFarTarget() {
+    // Pick a random target that's at least MIN_LEAP_DIST_RATIO of the viewport
+    // height away from the current button position. Stops the random leaps from
+    // accidentally landing on top of each other.
     const c = currentCenter();
     const minDist = window.innerHeight * MIN_LEAP_DIST_RATIO;
     let target = randomTarget();
@@ -87,16 +104,20 @@ if (btn) {
 
   function leap() {
     if (yielded) return;
+
     const now = Date.now();
     if (now - lastLeapAt < LEAP_THROTTLE) return;
     lastLeapAt = now;
+
     if (attempts >= TOTAL_LEAPS) return;
 
     if (attempts < TOTAL_LEAPS - 1) {
+      // Random crazy leap
       const target = pickFarTarget();
       offsetX = target.x - (natural.left + natural.width  / 2);
       offsetY = target.y - (natural.top  + natural.height / 2);
     } else {
+      // Final leap before yield — return to original (the trap)
       offsetX = 0;
       offsetY = 0;
     }
@@ -126,7 +147,19 @@ if (btn) {
     btn.style.transform = 'translate(0, 0)';
   }
 
-  // —————— CLICK ——————
+  // —————— TOUCH (primary, mobile) ——————
+  document.addEventListener('touchstart', (e) => {
+    if (yielded) return;
+    const t = e.touches[0];
+    if (!t) return;
+    const c = currentCenter();
+    if (distance(t.clientX, t.clientY, c.x, c.y) < PROXIMITY_TAP) {
+      e.preventDefault();
+      leap();
+    }
+  }, { passive: false });
+
+  // —————— MOUSE (desktop dev) ——————
   document.addEventListener('mousedown', (e) => {
     if (yielded) return;
     const c = currentCenter();
@@ -136,9 +169,9 @@ if (btn) {
     }
   });
 
-  // —————— YIELD CLICK → grey + dialog ——————
-  const cartLabel = btn.querySelector('.cart-label-d');
-  const PROCESSING_LABEL = 'TRYING…';
+  // —————— CLICK (yield = grey-out → dialog) ——————
+  const cartLabel = btn.querySelector('.cart-label');
+  const PROCESSING_LABEL = 'AWAITING ADVISOR';
 
   btn.addEventListener('click', (e) => {
     if (!yielded) {
@@ -150,6 +183,7 @@ if (btn) {
     setTimeout(showYieldDialog, 500);
   });
 
+  // —————— DIALOG ——————
   function showYieldDialog() {
     if (!dialog) return;
     dialog.removeAttribute('hidden');
@@ -162,7 +196,9 @@ if (btn) {
     setTimeout(() => dialog.setAttribute('hidden', ''), 400);
   }
 
-  if (dialogClose) dialogClose.addEventListener('click', hideYieldDialog);
+  if (dialogClose) {
+    dialogClose.addEventListener('click', hideYieldDialog);
+  }
 
   // —————— INIT + RESIZE ——————
   window.addEventListener('load', captureNatural);
@@ -181,10 +217,13 @@ if (btn) {
         offsetY = savedOY;
         clampToViewport();
         btn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-        requestAnimationFrame(() => { btn.style.transition = ''; });
+        requestAnimationFrame(() => {
+          btn.style.transition = '';
+        });
       });
     }, 100);
   }
 
   window.addEventListener('resize', handleResize);
+  window.addEventListener('orientationchange', handleResize);
 }

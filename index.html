@@ -2,331 +2,290 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=1440, initial-scale=1.0" />
-  <title>D-DENVER-CL Trucker Jacket | Diesel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#fcf7f1" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>Birkin 35 | Hermès</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500&family=Manrope:wght@400&family=Overpass+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="device-d">
+  <div class="device">
 
-    <!-- ========== TOP UTILITY BAR ========== -->
-    <div class="topbar-d">
-      <div class="topbar-left-d">
-        <a href="#">Need help?</a>
-        <a href="#">Store locator</a>
-      </div>
-      <div class="topbar-right-d">
-        <a href="#">English-US</a>
-        <a href="#">Diesel Group</a>
-      </div>
-    </div>
-
-    <!-- ========== HEADER ========== -->
-    <header class="header-d">
-      <a href="#" class="header-logo-d" aria-label="Diesel">
-        <span class="diesel-mark-d">DIESEL</span>
-        <span class="diesel-tag-d">For Successful Living</span>
+    <!-- HEADER -->
+    <header class="header">
+      <button class="header-icon header-menu" aria-label="Menu">
+        <img src="assets/images/menu-icon.svg" alt="" />
+      </button>
+      <button class="header-icon header-search" aria-label="Search">
+        <img src="assets/images/search-icon.svg" alt="" />
+      </button>
+      <a href="#" class="header-logo" aria-label="Hermès">
+        <img src="assets/images/hermes-logo.svg" alt="Hermès" />
       </a>
-      <nav class="menu-d" aria-label="Categories">
-        <a href="#">Sale</a>
-        <a href="#">Woman</a>
-        <a href="#">Man</a>
-        <a href="#">Bags</a>
-        <a href="#">Shoes</a>
-        <a href="#">Accessories</a>
-        <a href="#">Underwear</a>
-        <a href="#">Kid</a>
-        <a href="#">Beauty</a>
-        <a href="#">Living</a>
-        <a href="#">Stories</a>
-      </nav>
-      <div class="header-utility-d">
-        <button class="header-icon-d" aria-label="Search">🔍</button>
-        <button class="header-icon-d" aria-label="Account">👤</button>
-        <button class="header-icon-d" aria-label="Wishlist">♡</button>
-        <button class="header-icon-d header-bag-d" aria-label="Bag">
-          <span>BAG</span>
-          <span class="header-bag-count-d">0</span>
-        </button>
-      </div>
+      <button class="header-icon header-account" aria-label="Account">
+        <img src="assets/images/header-account.svg" alt="" />
+      </button>
+      <button class="header-icon header-bag" aria-label="Bag">
+        <img src="assets/images/header-bag.svg" alt="" />
+      </button>
     </header>
 
-    <main class="main-d">
+    <!-- MAIN -->
+    <main class="main">
 
-      <!-- ========== BREADCRUMB ========== -->
-      <nav class="breadcrumb-d">
-        <a href="#">Home</a> / <a href="#">Man</a> / <a href="#">Clothing</a> / <a href="#">Jackets</a> / <span>D-DENVER-CL</span>
+      <!-- HERO CAROUSEL -->
+      <section class="hero">
+        <div class="hero-image">
+          <img src="assets/images/IMG_9159.jpg" alt="Birkin 35" />
+        </div>
+        <div class="hero-dots" aria-hidden="true">
+          <span class="dot dot-active"></span>
+          <span class="dot dot-med"></span>
+          <span class="dot dot-small"></span>
+        </div>
+      </section>
+
+      <!-- SELECTOR / TITLE / PRICE / VARIANTS -->
+      <section class="selector">
+        <h1 class="product-title">Birkin 35</h1>
+        <div class="product-price">Price on request</div>
+        <div class="variant-group">
+          <div class="variant-header">
+            <span class="variant-label">Color</span>
+            <span class="variant-value">Noir</span>
+          </div>
+          <ul class="variant-swatches">
+            <li class="swatch swatch-active">
+              <img src="assets/images/IMG_9159.jpg" alt="Noir" />
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- PRODUCT DETAILS -->
+      <section class="details">
+        <div class="details-description">
+          <p>Bag in Togo calfskin with chèvre leather lining</p>
+          <p>- Two top handles<br>- Front turn-lock with padlock and clochette<br>- Two interior pockets, one zipped<br>- Four protective base studs</p>
+          <p>This product is handmade; dimensions may vary.</p>
+        </div>
+        <p class="details-line">Made in France</p>
+        <p class="details-line">Metal finish: Palladium-plated</p>
+        <p class="details-line">Dimensions: L 35 x H 25 x D 18 cm | Handle drop: 15 cm</p>
+
+        <div class="details-footer">
+          <p class="ref">Product reference:  H077801CKAA</p>
+          <p class="env">For the environmental characteristics of this product, <a href="#">click here</a></p>
+          <p class="contact">A question? <a href="#">Contact our Customer Service</a></p>
+        </div>
+
+        <!-- EXPANSION PANELS -->
+        <div class="panels">
+          <button class="panel">
+            <span class="panel-label">IN DETAIL</span>
+            <img class="panel-icon" src="assets/images/plus-icon.svg" alt="" />
+          </button>
+          <button class="panel">
+            <span class="panel-label">CARE</span>
+            <img class="panel-icon" src="assets/images/plus-icon.svg" alt="" />
+          </button>
+          <button class="panel">
+            <span class="panel-label">DELIVERY AND RETURNS</span>
+            <img class="panel-icon" src="assets/images/plus-icon.svg" alt="" />
+          </button>
+          <button class="panel">
+            <span class="panel-label">GIVE A GIFT</span>
+            <img class="panel-icon" src="assets/images/plus-icon.svg" alt="" />
+          </button>
+        </div>
+      </section>
+
+      <!-- STORY BEHIND -->
+      <section class="story">
+        <h2 class="story-title">The secrets of an object</h2>
+        <p class="story-body">
+          Created in 1984 and named for Jane Birkin, the<br>
+          city bag refined to its essence. Each one is cut,<br>
+          stitched and finished by a single artisan in our<br>
+          workshops — from the supple grained Togo calfskin<br>
+          to the palladium hardware.
+        </p>
+        <a class="story-link" href="#">DISCOVER THE LINE</a>
+
+        <div class="story-video">
+          <img class="video-thumb" src="assets/images/video-thumb.jpg" alt="" />
+          <div class="video-controls">
+            <button class="video-btn"><img src="assets/images/video-play.svg" alt="Play" /></button>
+            <button class="video-btn"><img src="assets/images/video-mute.svg" alt="Mute" /></button>
+            <div class="video-progress">
+              <div class="video-progress-fill"></div>
+            </div>
+            <span class="video-time">-0:16</span>
+            <button class="video-btn"><img src="assets/images/video-cc.svg" alt="Captions" /></button>
+            <button class="video-btn"><img src="assets/images/video-fullscreen.svg" alt="Fullscreen" /></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CROSS-SELL -->
+      <section class="cross-sell">
+        <h2 class="cross-sell-title">The perfect companion</h2>
+        <a class="cross-sell-item" href="#">
+          <div class="cross-sell-image">
+            <img src="assets/images/medor-clous.jpg" alt="Medor Stud Bag" />
+          </div>
+          <h3 class="cross-sell-name">Medor Stud Bag</h3>
+          <p class="cross-sell-price">€8,150</p>
+        </a>
+      </section>
+
+      <!-- BREADCRUMB -->
+      <nav class="breadcrumb">
+        <a class="crumb crumb-link" href="#">LEATHER GOODS</a>
+        <span class="crumb-sep">|</span>
+        <a class="crumb crumb-link" href="#">WOMEN'S BAGS AND CLUTCHES</a>
+        <span class="crumb-sep">|</span>
+        <span class="crumb">BIRKIN 35</span>
       </nav>
-
-      <!-- ========== HERO ========== -->
-      <section class="hero-d">
-        <!-- Product info card (LEFT side) -->
-        <aside class="product-info-d">
-          <div class="product-cat-d">DENIM JACKETS</div>
-          <h1 class="product-title-d">D-DENVER-CL Trucker Jacket</h1>
-          <div class="product-price-d">$390.00</div>
-          <p class="product-subtitle-d">Unisex's Trucker jacket in selvedge denim · Medium blue</p>
-
-          <div class="variant-group-d">
-            <div class="variant-header-d">
-              <span class="variant-label-d">Color</span>
-              <span class="variant-value-d">Medium Blue</span>
-            </div>
-            <ul class="variant-swatches-d">
-              <li class="swatch-d swatch-active-d"></li>
-              <li class="swatch-d swatch-light-d"></li>
-            </ul>
-          </div>
-
-          <div class="size-group-d">
-            <div class="variant-header-d">
-              <span class="variant-label-d">Size</span>
-              <a href="#" class="size-guide-d">Size guide</a>
-            </div>
-            <ul class="size-list-d">
-              <li class="size-d">XS</li>
-              <li class="size-d size-active-d">S</li>
-              <li class="size-d">M</li>
-              <li class="size-d">L</li>
-              <li class="size-d size-soldout-d">XL</li>
-              <li class="size-d size-soldout-d">XXL</li>
-            </ul>
-          </div>
-
-          <div class="actions-d">
-            <div class="add-to-cart-wrapper-d">
-              <span class="cart-slot-d" aria-hidden="true"></span>
-              <button id="add-to-cart-d" class="add-to-cart-btn-d" aria-label="Add to cart">
-                <span class="cart-label-d">ADD TO CART</span>
-              </button>
-            </div>
-            <button class="wishlist-btn-d" aria-label="Add to wishlist">♡</button>
-          </div>
-
-          <div class="ship-info-d">
-            <div class="ship-line-d"><strong>Free shipping</strong> on orders over $200</div>
-            <div class="ship-line-d"><strong>Free returns</strong> within 30 days</div>
-          </div>
-        </aside>
-
-        <!-- Product images (CENTER + RIGHT) -->
-        <div class="hero-images-d">
-          <div class="hero-image-d hero-image-main-d">
-            <div class="ph-image-d ph-model-d">
-              <span class="ph-label-d">Model in D-DENVER-CL trucker jacket</span>
-            </div>
-          </div>
-          <div class="hero-image-d hero-image-side-d">
-            <div class="ph-image-d ph-product-d">
-              <span class="ph-label-d">D-DENVER-CL jacket — front</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Floating wishlist promo banner -->
-        <div class="hero-promo-d">
-          <div class="hero-promo-text-d">Add to your wishlist to be notified.</div>
-          <button class="hero-promo-btn-d">ADD TO WISHLIST</button>
-        </div>
-      </section>
-
-      <!-- ========== RED PANEL (Diesel signature) ========== -->
-      <section class="red-panel-d">
-        <div class="red-panel-inner-d">
-          <div class="red-panel-left-d">
-            <div class="red-panel-pretitle-d">DISCOVER WHY WE LOVE — D-DENVER-CL FOR THIS WEEK ONLY</div>
-            <h2 class="red-panel-title-d">DESCRIPTION</h2>
-            <div class="red-panel-section-d">
-              <h3 class="red-panel-subtitle-d">Product description</h3>
-              <p class="red-panel-text-d">
-                A trucker jacket built like it owes you nothing. Cut from a heavy selvedge denim that fades on its own terms, with reinforced pocket bartacks and brass shanks. The kind of jacket that looks better the more you wear it — and worse the less you do.
-              </p>
-            </div>
-            <div class="red-panel-section-d">
-              <h3 class="red-panel-subtitle-d">Details &amp; Composition</h3>
-              <p class="red-panel-text-d">
-                · Selvedge denim, 14oz · Two chest flap pockets, two side hand pockets · Brass shank buttons · Adjustable side tabs · 100% cotton · Made in Italy
-              </p>
-            </div>
-            <div class="red-panel-section-d">
-              <h3 class="red-panel-subtitle-d">Material &amp; Care</h3>
-              <p class="red-panel-text-d">
-                Wash inside-out, cold. Hang dry. Don't iron the print. Don't tumble. Don't overthink it.
-              </p>
-            </div>
-            <button class="red-panel-cta-d">READ MORE</button>
-          </div>
-
-          <div class="red-panel-right-d">
-            <div class="red-panel-section-d">
-              <h3 class="red-panel-subtitle-d">Fitting</h3>
-              <p class="red-panel-text-d">Model is 1.86m, wearing size M. Runs true to size.</p>
-            </div>
-            <div class="red-panel-section-d">
-              <h3 class="red-panel-subtitle-d">Shipping &amp; Returns</h3>
-              <p class="red-panel-text-d">Free standard shipping on orders over $200. Returns free within 30 days.</p>
-            </div>
-            <div class="red-panel-section-d">
-              <h3 class="red-panel-subtitle-d">Product code</h3>
-              <p class="red-panel-text-d">A18421-0DKAH-8MG</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ========== COMPLETE THE LOOK ========== -->
-      <section class="shopthelook-d">
-        <div class="shopthelook-title-d">
-          <h2>Complete the look.</h2>
-        </div>
-        <div class="shopthelook-grid-d">
-          <a href="#" class="lookcard-d">
-            <div class="lookcard-img-d ph-image-d ph-denim-d"></div>
-            <p class="lookcard-name-d">D-MIHTY-CL Jeans</p>
-            <p class="lookcard-price-d">$290.00</p>
-          </a>
-          <a href="#" class="lookcard-d">
-            <div class="lookcard-img-d ph-image-d ph-denim-d"></div>
-            <p class="lookcard-name-d">T-DIEGOR Cotton Tee</p>
-            <p class="lookcard-price-d">$85.00</p>
-          </a>
-          <a href="#" class="lookcard-d">
-            <div class="lookcard-img-d ph-image-d ph-denim-d"></div>
-            <p class="lookcard-name-d">D-ROOKE Denim Shirt</p>
-            <p class="lookcard-price-d">$240.00</p>
-          </a>
-          <a href="#" class="lookcard-d">
-            <div class="lookcard-img-d ph-image-d ph-denim-d"></div>
-            <p class="lookcard-name-d">D-VAGH-AB Boot</p>
-            <p class="lookcard-price-d">$420.00</p>
-          </a>
-        </div>
-      </section>
-
-      <!-- ========== YOU MAY ALSO LIKE ========== -->
-      <section class="recommendations-d">
-        <h2 class="recommendations-title-d">You may also like</h2>
-        <div class="recommendations-grid-d">
-          <a href="#" class="reccard-d">
-            <div class="reccard-img-d ph-image-d ph-denim-d"></div>
-            <p class="reccard-name-d">D-FINING Jacket</p>
-            <p class="reccard-price-d">$340.00</p>
-          </a>
-          <a href="#" class="reccard-d">
-            <div class="reccard-img-d ph-image-d ph-denim-d"></div>
-            <p class="reccard-name-d">D-DUSTY-CL Jacket</p>
-            <p class="reccard-price-d">$420.00</p>
-          </a>
-          <a href="#" class="reccard-d">
-            <div class="reccard-img-d ph-image-d ph-denim-d"></div>
-            <p class="reccard-name-d">D-BARCY-CL Jacket</p>
-            <p class="reccard-price-d">$370.00</p>
-          </a>
-          <a href="#" class="reccard-d">
-            <div class="reccard-img-d ph-image-d ph-denim-d"></div>
-            <p class="reccard-name-d">D-KROOLEY Jacket</p>
-            <p class="reccard-price-d">$390.00</p>
-          </a>
-        </div>
-      </section>
 
     </main>
 
-    <!-- ========== FOOTER ========== -->
-    <footer class="footer-d">
+    <!-- FOOTER -->
+    <footer class="footer">
+      <section class="footer-section footer-service">
+        <h4 class="footer-heading">CUSTOMER SERVICE</h4>
+        <p class="footer-text">
+          <span class="muted">WhatsApp France: </span><a href="#">+33 1 40 17 47 00</a><span class="muted">.</span><br>
+          <span class="muted">Monday to Saturday, 9 am to 6:30 pm.</span>
+        </p>
+        <p class="footer-text muted">Stores and online orders, Monday to Saturday 10 am - 7 pm:</p>
+        <a class="footer-link" href="#">+33 (0)1 40 17 47 00</a>
 
-      <!-- Editorial promo boxes -->
-      <div class="footer-editorial-d">
-        <div class="footer-box-d footer-box-red-d">
-          <h3 class="footer-box-title-d">JOIN THE DIESEL FAMILY</h3>
-          <p class="footer-box-text-d">Get early access to drops, special offers, and stuff you'll probably scroll past.</p>
-          <form class="footer-box-form-d">
-            <input type="email" placeholder="Email address" />
-            <button type="submit">SIGN UP</button>
-          </form>
-          <label class="footer-box-checkbox-d"><input type="checkbox" /> I'm a man · woman · prefer not to say</label>
+        <p class="footer-text muted">For information requests at the Headquarters, contact our general switchboard Monday to Friday, 8:30 am - 6 pm:</p>
+        <a class="footer-link" href="#">+33 (0)1 40 17 47 17</a>
+
+        <a class="footer-link footer-email" href="#">Send an email</a>
+      </section>
+
+      <section class="footer-section footer-collapse">
+        <button class="footer-group-head">
+          <span>SERVICES</span>
+          <img src="assets/images/footer-arrow.svg" alt="" />
+        </button>
+        <ul class="footer-list">
+          <li>Contact us</li>
+          <li>FAQ</li>
+          <li>Find a store</li>
+          <li>Stores offering Beauty</li>
+          <li>Stores offering the Apple Watch Hermès</li>
+          <li>Give a gift</li>
+          <li>Made-to-Measure</li>
+          <li>Care and repair</li>
+        </ul>
+      </section>
+
+      <section class="footer-section footer-collapse">
+        <button class="footer-group-head">
+          <span>ORDERS</span>
+          <img src="assets/images/footer-arrow.svg" alt="" />
+        </button>
+        <ul class="footer-list">
+          <li>Payment</li>
+          <li>Delivery</li>
+          <li>Store pickup</li>
+          <li>Order tracking</li>
+          <li>Returns and exchanges</li>
+        </ul>
+      </section>
+
+      <section class="footer-section footer-collapse">
+        <button class="footer-group-head">
+          <span>THE HERMÈS HOUSE</span>
+          <img src="assets/images/footer-arrow.svg" alt="" />
+        </button>
+        <ul class="footer-list">
+          <li>Sustainability</li>
+          <li>The Hermès Corporate Foundation</li>
+          <li>Join Hermès</li>
+          <li>Finance &amp; Governance</li>
+          <li>Our partner houses</li>
+        </ul>
+      </section>
+
+      <section class="footer-section footer-collapse footer-collapse-static">
+        <div class="footer-group-head">
+          <span>LEGAL NOTICES</span>
         </div>
-        <div class="footer-box-d footer-box-image-d">
-          <span class="footer-box-eyebrow-d">DIESEL ARCHIVE</span>
-          <h3 class="footer-box-title-d">REVISIT. REWIRE. REWEAR.</h3>
-          <a href="#" class="footer-box-link-d">SHOP ARCHIVE →</a>
+        <ul class="footer-list">
+          <li>General terms of sale</li>
+          <li>General terms of use</li>
+          <li>Personal data</li>
+          <li>Cookies</li>
+          <li>Binding Corporate Rules (BCR)</li>
+          <li>Legal notices</li>
+          <li>Accessibility: partially compliant</li>
+          <li>Hermès site map</li>
+          <li>Environmental characteristics</li>
+        </ul>
+      </section>
+
+      <section class="footer-section footer-social">
+        <h4 class="footer-heading">FOLLOW US</h4>
+        <div class="footer-social-icons">
+          <a href="#"><img src="assets/images/social-1.svg" alt="" /></a>
+          <a href="#"><img src="assets/images/social-2.svg" alt="" /></a>
+          <a href="#"><img src="assets/images/social-3.svg" alt="" /></a>
         </div>
-        <div class="footer-box-d footer-box-image-2-d">
-          <span class="footer-box-eyebrow-d">SUSTAINABILITY</span>
-          <h3 class="footer-box-title-d">RESPONSIBLE DENIM.</h3>
-          <a href="#" class="footer-box-link-d">LEARN MORE →</a>
-        </div>
+      </section>
+
+      <section class="footer-section footer-newsletter">
+        <h4 class="footer-heading footer-heading-center">NEWSLETTER</h4>
+        <p class="footer-text footer-text-center">Receive our newsletter and discover our stories, our<br>collections and our surprises.</p>
+        <button class="footer-newsletter-btn">SUBSCRIBE</button>
+      </section>
+
+      <section class="footer-section footer-country">
+        <button class="footer-country-btn">
+          <span>YOUR LOCATION: FRANCE</span>
+          <img src="assets/images/country-arrow.svg" alt="" />
+        </button>
+      </section>
+
+      <div class="footer-rider">
+        <img src="assets/images/hermes-rider.svg" alt="Hermès" />
       </div>
 
-      <!-- Footer link columns -->
-      <div class="footer-links-d">
-        <div class="footer-col-d">
-          <h4>HELP</h4>
-          <ul>
-            <li>Customer service</li>
-            <li>Shipping</li>
-            <li>Returns</li>
-            <li>FAQ</li>
-            <li>Order tracking</li>
-          </ul>
-        </div>
-        <div class="footer-col-d">
-          <h4>LEGAL AREA</h4>
-          <ul>
-            <li>Terms &amp; conditions</li>
-            <li>Privacy policy</li>
-            <li>Cookies</li>
-            <li>Accessibility</li>
-          </ul>
-        </div>
-        <div class="footer-col-d">
-          <h4>WORLD OF DIESEL</h4>
-          <ul>
-            <li>Sustainability</li>
-            <li>Diesel Group</li>
-            <li>Careers</li>
-            <li>Press</li>
-            <li>Store locator</li>
-          </ul>
-        </div>
-        <div class="footer-col-d">
-          <h4>COMPANY</h4>
-          <ul>
-            <li>About</li>
-            <li>Investors</li>
-            <li>Newsroom</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Bottom strip: social / copyright / country -->
-      <div class="footer-bottom-d">
-        <div class="footer-social-d">
-          <a href="#" aria-label="Facebook">f</a>
-          <a href="#" aria-label="Instagram">○</a>
-          <a href="#" aria-label="TikTok">♪</a>
-          <a href="#" aria-label="YouTube">▶</a>
-          <a href="#" aria-label="X">𝕏</a>
-        </div>
-        <div class="footer-copyright-d">© DIESEL 2026. ALL RIGHTS RESERVED.</div>
-        <button class="footer-country-d">🌐 ENGLISH-US</button>
-      </div>
+      <p class="footer-copyright">© Hermès 2026. All rights reserved</p>
     </footer>
 
-    <!-- ========== YIELD DIALOG ========== -->
-    <div id="yield-dialog-d" class="dialog-d" hidden>
-      <div class="dialog-card-d">
-        <div class="dialog-mark-d">DIESEL</div>
-        <p class="dialog-message-d">SOLD OUT.<br>BUT FAST.<br>FASTER THAN YOU.</p>
-        <p class="dialog-submsg-d">Drop's gone. Maybe next time, click quicker.</p>
-        <button class="dialog-close-d">FINE</button>
+    <!-- YIELD DIALOG (appears after 4 failed leaps) -->
+    <div id="yield-dialog" class="dialog" hidden>
+      <div class="dialog-card">
+        <img class="dialog-logo" src="assets/images/hermes-logo.svg" alt="Hermès" />
+        <p class="dialog-message">Availability of this piece is determined by allocation. Please visit your nearest boutique to be introduced to one of our advisors.</p>
+        <button class="dialog-close">Understood</button>
+      </div>
+    </div>
+
+    <!-- STICKY BOTTOM ACTION BAR -->
+    <div class="sticky-bar">
+      <button class="apple-pay-btn" aria-label="Apple Pay">
+        <img src="assets/images/apple-pay-logo.svg" alt="Apple Pay" />
+      </button>
+      <div class="add-to-cart-wrapper">
+        <span class="cart-slot" aria-hidden="true"></span>
+        <button id="add-to-cart" class="add-to-cart-btn" aria-label="Add to cart">
+          <img class="cart-icon" src="assets/images/cart-icon.svg" alt="" />
+          <span class="cart-label">ADD TO CART</span>
+        </button>
       </div>
     </div>
 
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
