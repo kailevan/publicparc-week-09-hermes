@@ -202,12 +202,15 @@ ul { list-style: none; }
   background: #000;
 }
 
-/* Product info card overlay — 327 wide, top-right */
+/* Product info card overlay — 375x600 box positioned at x=1041, y=24
+   in the 1440x648 hero (Figma node 6986:363). 24px internal padding;
+   the buy actions sit pinned to the bottom via margin-top: auto. */
 .product-info-d {
   position: absolute;
   right: 24px;
-  top: 32px;
-  width: 327px;
+  top: 24px;
+  width: 375px;
+  height: 600px;
   background: rgba(255, 252, 247, 0.93);
   padding: 24px;
   display: flex;
@@ -267,12 +270,13 @@ ul { list-style: none; }
   height: 0;
 }
 
-/* Apple Pay + Add to Cart — exact widths from Figma: 108.3 + 218.7 = 327 */
+/* Apple Pay + Add to Cart — exact widths from Figma: 108.3 + 218.7 = 327.
+   margin-top: auto pushes the row to the bottom of the 600px card. */
 .actions-d {
   display: flex;
   align-items: stretch;
   height: 48px;
-  margin-top: 8px;
+  margin-top: auto;
 }
 
 .apple-pay-btn-d {
