@@ -35,7 +35,6 @@ if (btn) {
   let yielded = false;
   let snapBackTimer = null;
   let lastLeapAt = 0;
-  let inProximity = false;
 
   let natural = { left: 0, top: 0, width: 0, height: 0 };
 
@@ -136,25 +135,17 @@ if (btn) {
     offsetX = 0;
     offsetY = 0;
     attempts = 0;
-    inProximity = false;
     btn.style.transform = 'translate(0, 0)';
   }
 
-  // —————— CURSOR (primary, desktop) ——————
-  // Each fresh "approach" — cursor crossing into proximity from outside —
-  // triggers one leap. Sustained proximity won't spam (the inProximity flag
-  // requires the cursor to leave and re-enter to count again).
-  document.addEventListener('mousemove', (e) => {
+  // —————— CLICK (mirrors the mobile tap-to-leap) ——————
+  // Each click within proximity of the button triggers one leap.
+  document.addEventListener('mousedown', (e) => {
     if (yielded) return;
     const c = currentCenter();
-    const d = distance(e.clientX, e.clientY, c.x, c.y);
-    if (d < PROXIMITY_RADIUS) {
-      if (!inProximity) {
-        inProximity = true;
-        leap();
-      }
-    } else {
-      inProximity = false;
+    if (distance(e.clientX, e.clientY, c.x, c.y) < PROXIMITY_RADIUS) {
+      e.preventDefault();
+      leap();
     }
   });
 
