@@ -215,3 +215,47 @@ if (btn) {
 
   window.addEventListener('resize', handleResize);
 }
+
+// ====== HERO TABLIST <-> CAROUSEL SYNC ======
+const heroStrip = document.querySelector('.hero-images-d');
+const heroTabs  = Array.from(document.querySelectorAll('.hero-tab-d'));
+const heroImages = Array.from(document.querySelectorAll('.hero-image-d'));
+
+if (heroStrip && heroTabs.length) {
+  function setActiveTab(idx) {
+    heroTabs.forEach((t, i) => {
+      t.classList.toggle('hero-tab-active-d', i === idx);
+      t.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+    });
+  }
+
+  heroTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const idx = parseInt(tab.dataset.view, 10) || 0;
+      const target = heroImages[idx];
+      if (!target) return;
+      // Smooth-scroll the strip so the chosen image starts at the left.
+      heroStrip.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+      setActiveTab(idx);
+    });
+  });
+
+  // Update the active tab as the user scrolls the carousel.
+  let scrollTick = null;
+  heroStrip.addEventListener('scroll', () => {
+    if (scrollTick) return;
+    scrollTick = requestAnimationFrame(() => {
+      const left = heroStrip.scrollLeft;
+      // Find the image whose left edge is closest to the strip's scroll position.
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      heroImages.forEach((img, i) => {
+        const d = Math.abs(img.offsetLeft - left);
+        if (d < bestDist) { bestDist = d; bestIdx = i; }
+      });
+      setActiveTab(bestIdx);
+      scrollTick = null;
+    });
+  });
+}
+

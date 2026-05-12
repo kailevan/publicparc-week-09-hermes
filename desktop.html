@@ -6,7 +6,7 @@
   <title>Birkin 35 | Hermès</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500&family=Manrope:wght@400&family=Overpass+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500&family=Manrope:wght@400;700&family=Overpass+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style-desktop.css" />
 </head>
 <body>
@@ -53,12 +53,34 @@
       <!-- ========== HERO ========== -->
       <section class="hero-d">
         <div class="hero-images-d">
-          <div class="hero-image-d">
+          <div class="hero-image-d" data-view="0">
             <img src="assets/images/IMG_9159.jpg" alt="Birkin 35 — front" />
           </div>
-          <div class="hero-image-d">
+          <div class="hero-image-d" data-view="1">
             <img src="assets/images/IMG_9159.jpg" alt="Birkin 35 — side" />
           </div>
+          <div class="hero-image-d" data-view="2">
+            <img src="assets/images/IMG_9159.jpg" alt="Birkin 35 — above" />
+          </div>
+          <div class="hero-image-d" data-view="3">
+            <img src="assets/images/IMG_9159.jpg" alt="Birkin 35 — back" />
+          </div>
+        </div>
+
+        <!-- Image tablist: 4 small thumbnails + active indicator -->
+        <div class="hero-tablist-d" role="tablist" aria-label="Product views">
+          <button class="hero-tab-d hero-tab-active-d" data-view="0" role="tab" aria-selected="true">
+            <img src="assets/images/IMG_9159.jpg" alt="" />
+          </button>
+          <button class="hero-tab-d" data-view="1" role="tab" aria-selected="false">
+            <img src="assets/images/IMG_9159.jpg" alt="" />
+          </button>
+          <button class="hero-tab-d" data-view="2" role="tab" aria-selected="false">
+            <img src="assets/images/IMG_9159.jpg" alt="" />
+          </button>
+          <button class="hero-tab-d" data-view="3" role="tab" aria-selected="false">
+            <img src="assets/images/IMG_9159.jpg" alt="" />
+          </button>
         </div>
 
         <aside class="product-info-d">

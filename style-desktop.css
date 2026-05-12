@@ -106,8 +106,8 @@ ul { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: 'Overpass Mono', monospace;
-  font-weight: 400;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
   font-size: 11px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -118,32 +118,89 @@ ul { list-style: none; }
 .menu-bar-d a { padding: 14px 0; }
 .menu-bar-d a:hover { text-decoration: underline; }
 
-/* ===================== HERO (1440 × 648, full width) ===================== */
+/* ===================== HERO (1440 × 648, full width, horizontal scroll) ===================== */
 .hero-d {
   width: 1440px;
   height: 648px;
   position: relative;
+  overflow: hidden;
 }
 
+/* Horizontal scrollable strip — 4 images of 648×648 side by side.
+   At 1440px viewport: 2 full images visible + ~144px of the third
+   peeking on the right, matching the Figma layout. */
 .hero-images-d {
   position: absolute;
   left: 0;
   top: 0;
   width: 1440px;
   height: 648px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
+.hero-images-d::-webkit-scrollbar { display: none; }
+.hero-images-d { scrollbar-width: none; }
+
 .hero-image-d {
-  width: 100%;
-  height: 100%;
+  flex: 0 0 648px;
+  width: 648px;
+  height: 648px;
   overflow: hidden;
   background: var(--bg-card);
+  scroll-snap-align: start;
 }
 
 .hero-image-d img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Tablist — 148 × 40, positioned bottom-left of the hero (Figma: x=24, y=584) */
+.hero-tablist-d {
+  position: absolute;
+  left: 24px;
+  top: 584px;
+  width: 148px;
+  height: 40px;
+  padding: 4px;
+  display: flex;
+  gap: 4px;
+  z-index: 3;
+}
+
+.hero-tab-d {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: var(--bg-card);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+
+.hero-tab-d img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+  transition: opacity 200ms ease-out;
+}
+
+.hero-tab-active-d img { opacity: 1; }
+
+/* Active indicator — 32×2 horizontal divider under the active tab */
+.hero-tab-active-d::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 2px;
+  background: #000;
+}
 
 /* Product info card overlay — 327 wide, top-right */
 .product-info-d {
