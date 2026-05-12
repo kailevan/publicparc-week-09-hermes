@@ -1,27 +1,37 @@
 // Hermès Birkin — Add to Cart Evade (mobile-first, touch-driven)
 //
 // Choreographed mechanic:
-//   Tap 1 → button slides left to cover the Apple Pay slot;
-//           Apple Pay fades away at the same time.
-//   Tap 2 → button flies up to the top of the viewport (near the cart icon).
-//   Tap 3 → button swings to the middle-left, over the bag image.
-//   Tap 4 → button returns to its original position; Apple Pay slides back in
-//           too — looks like it gave up.
-//   Tap 5 → tap registers, button greys out briefly, dialog fades in.
-//   2s idle with no tap → button slides home, Apple Pay returns, sequence resets.
+//   Tap 1–3 → button leaps to a random "crazy" position in the upper half
+//             of the viewport. Each new leap is chosen to be far from the
+//             previous one (avoids tiny boring jumps).
+//   Tap 4   → button returns to its original position — the trap.
+//   Tap 5   → tap finally registers, button greys out briefly with
+//             "AWAITING ADVISOR", then the Hermès dialog fades in.
+//   2s idle with no tap → button slides home, sequence resets.
+//
+// Apple Pay stays put for the whole interaction. The outlined "cart-slot"
+// behind the button is always visible — when the button leaps away, the
+// pill silhouette stays complete with one empty half.
 
 const btn = document.getElementById('add-to-cart');
-const applePay = document.querySelector('.apple-pay-btn');
 const dialog = document.getElementById('yield-dialog');
 const dialogClose = document.querySelector('.dialog-close');
 
 if (btn) {
-  const PROXIMITY_TAP    = 90;    // px — touch this close = trigger a leap
-  const ABOVE_OFFSET     = 80;    // px — how far above natural for tap 2
-  const PADDING          = 16;    // px — keep button this far from viewport edges
-  const SNAP_BACK_DELAY  = 2000;  // ms — idle time before button slides home
-  const LEAP_THROTTLE    = 250;   // ms — minimum time between leaps
-  const TOTAL_LEAPS      = 4;     // tap 5 is the yield
+  const PROXIMITY_TAP        = 90;    // px — touch this close = trigger a leap
+  const PADDING              = 16;    // px — keep button this far from viewport edges
+  const SNAP_BACK_DELAY      = 2000;  // ms — idle time before button slides home
+  const LEAP_THROTTLE        = 250;   // ms — minimum time between leaps
+  const TOTAL_LEAPS          = 4;     // tap 5 is the yield
+  const MIN_LEAP_DIST_RATIO  = 0.25;  // each random leap must travel at least
+                                      // this fraction of the viewport height
+  const REROLL_TRIES         = 6;     // attempts to find a "far enough" target
+
+  // Random leap target zone — fractions of the viewport.
+  // X is full-width-ish; Y stays in the upper portion so the button is
+  // clearly LEAPED, not just sliding within the sticky bar area.
+  const X_MIN = 0.10, X_MAX = 0.90;
+  const Y_MIN = 0.05, Y_MAX = 0.55;
 
   let offsetX = 0;
   let offsetY = 0;
@@ -69,6 +79,29 @@ if (btn) {
     offsetY = Math.max(minOY, Math.min(maxOY, offsetY));
   }
 
+  function randomTarget() {
+    const xRatio = X_MIN + Math.random() * (X_MAX - X_MIN);
+    const yRatio = Y_MIN + Math.random() * (Y_MAX - Y_MIN);
+    return {
+      x: xRatio * window.innerWidth,
+      y: yRatio * window.innerHeight,
+    };
+  }
+
+  function pickFarTarget() {
+    // Pick a random target that's at least MIN_LEAP_DIST_RATIO of the viewport
+    // height away from the current button position. Stops the random leaps from
+    // accidentally landing on top of each other.
+    const c = currentCenter();
+    const minDist = window.innerHeight * MIN_LEAP_DIST_RATIO;
+    let target = randomTarget();
+    for (let i = 0; i < REROLL_TRIES; i++) {
+      if (distance(target.x, target.y, c.x, c.y) >= minDist) break;
+      target = randomTarget();
+    }
+    return target;
+  }
+
   function leap() {
     if (yielded) return;
 
@@ -78,36 +111,15 @@ if (btn) {
 
     if (attempts >= TOTAL_LEAPS) return;
 
-    if (attempts === 0) {
-      // Tap 1 — slide left so the button's left edge aligns with Apple Pay's
-      // left edge. Apple Pay fades out at the same time.
-      if (applePay) {
-        const appleRect = applePay.getBoundingClientRect();
-        offsetX = appleRect.left - natural.left;
-        offsetY = 0;
-        applePay.classList.add('hidden');
-      }
-    } else if (attempts === 1) {
-      // Tap 2 — flies up to the top of the viewport, near the cart icon
-      const targetCenterX = window.innerWidth * 0.55;
-      const targetCenterY = window.innerHeight * 0.08;
-      offsetX = targetCenterX - (natural.left + natural.width / 2);
-      offsetY = targetCenterY - (natural.top  + natural.height / 2);
-    } else if (attempts === 2) {
-      // Tap 3 — swings across to the middle-left, over the bag image
-      const targetCenterX = window.innerWidth * 0.22;
-      const targetCenterY = window.innerHeight * 0.45;
-      offsetX = targetCenterX - (natural.left + natural.width / 2);
-      offsetY = targetCenterY - (natural.top  + natural.height / 2);
-    } else if (attempts === 3) {
-      // Tap 4 — back to the original position. Apple Pay only fades back in
-      // AFTER the button has settled, so the two motions read as cause/effect
-      // instead of stepping on each other.
+    if (attempts < TOTAL_LEAPS - 1) {
+      // Random crazy leap
+      const target = pickFarTarget();
+      offsetX = target.x - (natural.left + natural.width  / 2);
+      offsetY = target.y - (natural.top  + natural.height / 2);
+    } else {
+      // Final leap before yield — return to original (the trap)
       offsetX = 0;
       offsetY = 0;
-      if (applePay) {
-        setTimeout(() => applePay.classList.remove('hidden'), 800);
-      }
     }
 
     clampToViewport();
@@ -133,7 +145,6 @@ if (btn) {
     offsetY = 0;
     attempts = 0;
     btn.style.transform = 'translate(0, 0)';
-    if (applePay) applePay.classList.remove('hidden');
   }
 
   // —————— TOUCH (primary, mobile) ——————
@@ -167,8 +178,6 @@ if (btn) {
       e.preventDefault();
       return;
     }
-    // The tap finally registers — button greys out and its label swaps to a
-    // boutique-toned waiting state for a beat before the answer arrives.
     btn.classList.add('processing');
     if (cartLabel) cartLabel.textContent = PROCESSING_LABEL;
     setTimeout(showYieldDialog, 500);

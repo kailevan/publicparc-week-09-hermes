@@ -812,6 +812,25 @@ ul {
   height: 20px;
 }
 
+/* Wrapper holds the button + the outlined slot that stays put behind it. */
+.add-to-cart-wrapper {
+  position: relative;
+  width: 238.66px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.cart-slot {
+  position: absolute;
+  inset: 0;
+  border-top: 1px solid #000;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  border-radius: 0 2px 2px 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .add-to-cart-btn {
   width: 238.66px;
   height: 48px;
@@ -832,6 +851,7 @@ ul {
     background 400ms ease-out;
   will-change: transform;
   position: relative;
+  z-index: 1;
 }
 
 .add-to-cart-btn.processing {
